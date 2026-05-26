@@ -50,115 +50,73 @@ var DefaultColorizer = New(WithColors(true), WithHyperlinks(true))
 //	var s = Colorize(Red("some"), BgBlue)
 //
 // clears red color from value.
-func Colorize(arg interface{}, color Color) Value {
-	return DefaultColorizer.Colorize(arg, color)
-}
+func Colorize(arg interface{}, color Color) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Reset wraps given argument returning Value without formats, colors and links.
-func Reset(arg interface{}) Value {
-	return DefaultColorizer.Reset(arg)
-}
+func Reset(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Clear wraps given argument returning Value without formats and colors. But
 // preserving links.
-func Clear(arg interface{}) Value {
-	return DefaultColorizer.Clear(arg)
-}
+func Clear(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 //
 // Formats
 //
 
 // Bold or increased intensity (1).
-func Bold(arg interface{}) Value {
-	return DefaultColorizer.Bold(arg)
-}
+func Bold(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Faint decreases intensity (2). The Faint rejects the Bold.
-func Faint(arg interface{}) Value {
-	return DefaultColorizer.Faint(arg)
-}
+func Faint(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // DoublyUnderline or Bold off, double-underline per ECMA-48 (21).
-func DoublyUnderline(arg interface{}) Value {
-	return DefaultColorizer.DoublyUnderline(arg)
-}
+func DoublyUnderline(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Fraktur is rarely supported (20).
-func Fraktur(arg interface{}) Value {
-	return DefaultColorizer.Fraktur(arg)
-}
+func Fraktur(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Italic is not widely supported, sometimes treated as inverse (3).
-func Italic(arg interface{}) Value {
-	return DefaultColorizer.Italic(arg)
-}
+func Italic(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Underline (4).
-func Underline(arg interface{}) Value {
-	return DefaultColorizer.Underline(arg)
-}
+func Underline(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // SlowBlink makes text blink less than 150 per minute (5).
-func SlowBlink(arg interface{}) Value {
-	return DefaultColorizer.SlowBlink(arg)
-}
+func SlowBlink(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // RapidBlink makes text blink 150+ per minute. It is not widely supported (6).
-func RapidBlink(arg interface{}) Value {
-	return DefaultColorizer.RapidBlink(arg)
-}
+func RapidBlink(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Blink is alias for the SlowBlink.
-func Blink(arg interface{}) Value {
-	return DefaultColorizer.Blink(arg)
-}
+func Blink(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Reverse video, swap foreground and background colors (7).
-func Reverse(arg interface{}) Value {
-	return DefaultColorizer.Reverse(arg)
-}
+func Reverse(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Inverse is alias for the Reverse
-func Inverse(arg interface{}) Value {
-	return DefaultColorizer.Inverse(arg)
-}
+func Inverse(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Conceal hides text, preserving an ability to select the text and copy it. It
 // is not widely supported (8).
-func Conceal(arg interface{}) Value {
-	return DefaultColorizer.Conceal(arg)
-}
+func Conceal(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Hidden is alias for the Conceal
-func Hidden(arg interface{}) Value {
-	return DefaultColorizer.Hidden(arg)
-}
+func Hidden(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // CrossedOut makes characters legible, but marked for deletion (9).
-func CrossedOut(arg interface{}) Value {
-	return DefaultColorizer.CrossedOut(arg)
-}
+func CrossedOut(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // StrikeThrough is alias for the CrossedOut.
-func StrikeThrough(arg interface{}) Value {
-	return DefaultColorizer.StrikeThrough(arg)
-}
+func StrikeThrough(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Framed (51).
-func Framed(arg interface{}) Value {
-	return DefaultColorizer.Framed(arg)
-}
+func Framed(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Encircled (52).
-func Encircled(arg interface{}) Value {
-	return DefaultColorizer.Encircled(arg)
-}
+func Encircled(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Overlined (53).
-func Overlined(arg interface{}) Value {
-	return DefaultColorizer.Overlined(arg)
-}
+func Overlined(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 //
 // Foreground colors
@@ -166,88 +124,56 @@ func Overlined(arg interface{}) Value {
 //
 
 // Black foreground color (30)
-func Black(arg interface{}) Value {
-	return DefaultColorizer.Black(arg)
-}
+func Black(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Red foreground color (31)
-func Red(arg interface{}) Value {
-	return DefaultColorizer.Red(arg)
-}
+func Red(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Green foreground color (32)
-func Green(arg interface{}) Value {
-	return DefaultColorizer.Green(arg)
-}
+func Green(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Yellow foreground color (33)
-func Yellow(arg interface{}) Value {
-	return DefaultColorizer.Yellow(arg)
-}
+func Yellow(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Blue foreground color (34)
-func Blue(arg interface{}) Value {
-	return DefaultColorizer.Blue(arg)
-}
+func Blue(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Magenta foreground color (35)
-func Magenta(arg interface{}) Value {
-	return DefaultColorizer.Magenta(arg)
-}
+func Magenta(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Cyan foreground color (36)
-func Cyan(arg interface{}) Value {
-	return DefaultColorizer.Cyan(arg)
-}
+func Cyan(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // White foreground color (37)
-func White(arg interface{}) Value {
-	return DefaultColorizer.White(arg)
-}
+func White(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 //
 // Bright foreground colors
 //
 
 // BrightBlack foreground color (90)
-func BrightBlack(arg interface{}) Value {
-	return DefaultColorizer.BrightBlack(arg)
-}
+func BrightBlack(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightRed foreground color (91)
-func BrightRed(arg interface{}) Value {
-	return DefaultColorizer.BrightRed(arg)
-}
+func BrightRed(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightGreen foreground color (92)
-func BrightGreen(arg interface{}) Value {
-	return DefaultColorizer.BrightGreen(arg)
-}
+func BrightGreen(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightYellow foreground color (93)
-func BrightYellow(arg interface{}) Value {
-	return DefaultColorizer.BrightYellow(arg)
-}
+func BrightYellow(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightBlue foreground color (94)
-func BrightBlue(arg interface{}) Value {
-	return DefaultColorizer.BrightBlue(arg)
-}
+func BrightBlue(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightMagenta foreground color (95)
-func BrightMagenta(arg interface{}) Value {
-	return DefaultColorizer.BrightMagenta(arg)
-}
+func BrightMagenta(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightCyan foreground color (96)
-func BrightCyan(arg interface{}) Value {
-	return DefaultColorizer.BrightCyan(arg)
-}
+func BrightCyan(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightWhite foreground color (97)
-func BrightWhite(arg interface{}) Value {
-	return DefaultColorizer.BrightWhite(arg)
-}
+func BrightWhite(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 //
 // Other
@@ -259,14 +185,10 @@ func BrightWhite(arg interface{}) Value {
 //	  8- 15:  high intensity colors (as in ESC [ 90–97 m)
 //	 16-231:  6 × 6 × 6 cube (216 colors): 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
 //	232-255:  grayscale from black to white in 24 steps
-func Index(n ColorIndex, arg interface{}) Value {
-	return DefaultColorizer.Index(n, arg)
-}
+func Index(n ColorIndex, arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Gray from 0 to 24.
-func Gray(n GrayIndex, arg interface{}) Value {
-	return DefaultColorizer.Gray(n, arg)
-}
+func Gray(n GrayIndex, arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 //
 // Background colors
@@ -274,88 +196,56 @@ func Gray(n GrayIndex, arg interface{}) Value {
 //
 
 // BgBlack background color (40)
-func BgBlack(arg interface{}) Value {
-	return DefaultColorizer.BgBlack(arg)
-}
+func BgBlack(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgRed background color (41)
-func BgRed(arg interface{}) Value {
-	return DefaultColorizer.BgRed(arg)
-}
+func BgRed(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgGreen background color (42)
-func BgGreen(arg interface{}) Value {
-	return DefaultColorizer.BgGreen(arg)
-}
+func BgGreen(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgYellow background color (43)
-func BgYellow(arg interface{}) Value {
-	return DefaultColorizer.BgYellow(arg)
-}
+func BgYellow(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBlue background color (44)
-func BgBlue(arg interface{}) Value {
-	return DefaultColorizer.BgBlue(arg)
-}
+func BgBlue(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgMagenta background color (45)
-func BgMagenta(arg interface{}) Value {
-	return DefaultColorizer.BgMagenta(arg)
-}
+func BgMagenta(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgCyan background color (46)
-func BgCyan(arg interface{}) Value {
-	return DefaultColorizer.BgCyan(arg)
-}
+func BgCyan(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgWhite background color (47)
-func BgWhite(arg interface{}) Value {
-	return DefaultColorizer.BgWhite(arg)
-}
+func BgWhite(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 //
 // Bright background colors
 //
 
 // BgBrightBlack background color (100)
-func BgBrightBlack(arg interface{}) Value {
-	return DefaultColorizer.BgBrightBlack(arg)
-}
+func BgBrightBlack(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightRed background color (101)
-func BgBrightRed(arg interface{}) Value {
-	return DefaultColorizer.BgBrightRed(arg)
-}
+func BgBrightRed(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightGreen background color (102)
-func BgBrightGreen(arg interface{}) Value {
-	return DefaultColorizer.BgBrightGreen(arg)
-}
+func BgBrightGreen(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightYellow background color (103)
-func BgBrightYellow(arg interface{}) Value {
-	return DefaultColorizer.BgBrightYellow(arg)
-}
+func BgBrightYellow(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightBlue background color (104)
-func BgBrightBlue(arg interface{}) Value {
-	return DefaultColorizer.BgBrightBlue(arg)
-}
+func BgBrightBlue(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightMagenta background color (105)
-func BgBrightMagenta(arg interface{}) Value {
-	return DefaultColorizer.BgBrightMagenta(arg)
-}
+func BgBrightMagenta(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightCyan background color (106)
-func BgBrightCyan(arg interface{}) Value {
-	return DefaultColorizer.BgBrightCyan(arg)
-}
+func BgBrightCyan(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightWhite background color (107)
-func BgBrightWhite(arg interface{}) Value {
-	return DefaultColorizer.BgBrightWhite(arg)
-}
+func BgBrightWhite(arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 //
 // Other
@@ -367,14 +257,10 @@ func BgBrightWhite(arg interface{}) Value {
 //	  8- 15:  high intensity colors (as in ESC [100–107 m)
 //	 16-231:  6 × 6 × 6 cube (216 colors): 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
 //	232-255:  grayscale from black to white in 24 steps
-func BgIndex(n ColorIndex, arg interface{}) Value {
-	return DefaultColorizer.BgIndex(n, arg)
-}
+func BgIndex(n ColorIndex, arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgGray from 0 to 24.
-func BgGray(n GrayIndex, arg interface{}) Value {
-	return DefaultColorizer.BgGray(n, arg)
-}
+func BgGray(n GrayIndex, arg interface{}) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 //
 // Hyperlinks feature
@@ -400,17 +286,17 @@ func BgGray(n GrayIndex, arg interface{}) Value {
 //
 //	au.Hyperlink("Example", "http://example.com", aurora.HyperlinkID("10"))
 func Hyperlink(arg interface{}, target string, params ...HyperlinkParam) Value {
-	return DefaultColorizer.Hyperlink(arg, target, params...)
+	_ = "STUB: not implemented"
+	return *new(Value)
 }
 
 // HyperlinkTarget of the argument if it's a Value.
-func HyperlinkTarget(arg interface{}) (target string) {
-	return DefaultColorizer.HyperlinkTarget(arg)
-}
+func HyperlinkTarget(arg interface{}) (target string) { _ = "STUB: not implemented"; return "" }
 
 // HyperlinkParams of the argument if it's a Value.
 func HyperlinkParams(arg interface{}) (params []HyperlinkParam) {
-	return DefaultColorizer.HyperlinkParams(arg)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // Sprintf allows to use Value as format. For example
@@ -426,6 +312,4 @@ func HyperlinkParams(arg interface{}) (params []HyperlinkParam) {
 // color.
 //
 // It applies own configurations to all given Values.
-func Sprintf(format interface{}, args ...interface{}) string {
-	return DefaultColorizer.Sprintf(format, args...)
-}
+func Sprintf(format interface{}, args ...interface{}) string { _ = "STUB: not implemented"; return "" }

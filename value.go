@@ -37,8 +37,6 @@ package aurora
 
 import (
 	"fmt"
-	"strconv"
-	"unicode/utf8"
 )
 
 // compile-time check
@@ -49,6 +47,7 @@ var (
 )
 
 func coloredFormat(color Color, s fmt.State, verb rune) string {
+	_ = "STUB: not implemented"
 
 	// it's enough for many cases (%-+020.10f)
 	// %          - 1
@@ -70,49 +69,10 @@ func coloredFormat(color Color, s fmt.State, verb rune) string {
 	// x2 (possible tail color)
 	//
 	// 10 + 59 * 2 = 128
-
-	var format = make([]byte, 0, 128)
-
-	if color != 0 {
-		format = append(format, esc...)
-		format = color.appendNos(format, false)
-		format = append(format, 'm')
-	}
-
-	format = append(format, '%')
-
-	var f byte
-	for i := 0; i < len(availFlags); i++ {
-		if f = availFlags[i]; s.Flag(int(f)) {
-			format = append(format, f)
-		}
-	}
-
-	var (
-		width, prec int
-		ok          bool
-	)
-	if width, ok = s.Width(); ok {
-		format = strconv.AppendInt(format, int64(width), 10)
-	}
-
-	if prec, ok = s.Precision(); ok {
-		format = append(format, '.')
-		format = strconv.AppendInt(format, int64(prec), 10)
-	}
-
-	if verb > utf8.RuneSelf {
-		format = append(format, string(verb)...)
-	} else {
-		format = append(format, byte(verb))
-	}
-
-	if color != 0 {
-		format = append(format, clear...) // just clear
-	}
-
-	return string(format)
+	return ""
 }
+
+// just clear
 
 type colorConfig uint64
 
@@ -121,24 +81,17 @@ const (
 	hyperlinksPin colorConfig = 1 << 33
 )
 
-func (cc colorConfig) colorsEnabled() bool {
-	return cc&colorPin != 0
-}
+func (cc colorConfig) colorsEnabled() bool { _ = "STUB: not implemented"; return false }
 
-func (cc colorConfig) hyperlinksEnbaled() bool {
-	return cc&hyperlinksPin != 0
-}
+func (cc colorConfig) hyperlinksEnbaled() bool { _ = "STUB: not implemented"; return false }
 
-func (cc colorConfig) color() Color {
-	if cc.colorsEnabled() {
-		return Color(uint32(cc)) // lower 32 bits only
-	}
-	return 0 // even if a color set
-}
+func (cc colorConfig) color() Color { _ = "STUB: not implemented"; return *new(Color) }
 
-func (cc colorConfig) resetColor() colorConfig {
-	return cc & (colorPin | hyperlinksPin)
-}
+// lower 32 bits only
+
+// even if a color set
+
+func (cc colorConfig) resetColor() colorConfig { _ = "STUB: not implemented"; return *new(colorConfig) }
 
 // A Value represents any printable value
 // with or without colors, formats and a link.
@@ -149,290 +102,165 @@ type Value struct {
 }
 
 // String implements standard fmt.Stringer interface.
-func (v Value) String() string {
-	var (
-		t     []byte
-		val   = fmt.Sprint(v.value)
-		color = v.cc.color()
-	)
+func (v Value) String() string { _ = "STUB: not implemented"; return "" }
 
-	if v.cc.hyperlinksEnbaled() && v.hyperlink.isExists() {
-		var (
-			ln  = len(val)
-			nos string
-		)
-		// calculate length
-		ln += v.hyperlink.headLen()
-		if color != 0 {
-			ln += len(esc)
-			nos = color.Nos(false)
-			ln += len(nos) + len("m")
-			ln += len(clear)
-		}
-		ln += v.hyperlink.tailLen()
-		// fill
-		t = make([]byte, 0, ln)
-		t = append(t, v.hyperlink.headBytes()...)
-		if color != 0 {
-			t = append(t, esc...)
-			t = append(t, nos...)
-			t = append(t, 'm')
-			t = append(t, val...)
-			t = append(t, clear...)
-		} else {
-			t = append(t, val...)
-		}
-		t = append(t, v.hyperlink.tailBytes()...)
-		return string(t)
-	}
+// calculate length
 
-	// no links, only colors & formats
-	if color != 0 {
-		return esc + color.Nos(false) + "m" + val + clear
-	}
+// fill
 
-	// no links, no colors, no formats, just the value
-	return val
-}
+// no links, only colors & formats
+
+// no links, no colors, no formats, just the value
 
 // Color returns colors and formats of the Value.
 func (v Value) Color() Color {
-	return v.cc.color()
+	_ = "STUB: not implemented"
+	return *
+
+	// Reset colors, formats and links.
+	new(Color)
 }
 
-// Reset colors, formats and links.
-func (v Value) Reset() Value {
-	v.cc, v.hyperlink = v.cc.resetColor(), nil
-	return v
-}
+func (v Value) Reset() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Clear colors and formats, preserving links.
-func (v Value) Clear() Value {
-	v.cc = v.cc.resetColor()
-	return v
-}
+func (v Value) Clear() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Value returns value's value (welcome to the tautology club)
 func (v Value) Value() interface{} {
-	return v.value
+	_ = "STUB: not implemented"
+
+	// Format implements standard fmt.Formatter interface.
+	return nil
 }
 
-// Format implements standard fmt.Formatter interface.
-func (v Value) Format(s fmt.State, verb rune) {
-	if !v.cc.hyperlinksEnbaled() {
-		fmt.Fprintf(s, coloredFormat(v.Color(), s, verb), v.value)
-		return
-	}
-	v.hyperlink.writeHead(s)
-	fmt.Fprintf(s, coloredFormat(v.Color(), s, verb), v.value)
-	v.hyperlink.writeTail(s)
-}
+func (v Value) Format(s fmt.State, verb rune) { _ = "STUB: not implemented"; return }
 
 // Formats
 //
 // Bold or increased intensity (1).
-func (v Value) Bold() Value {
-	v.cc = colorConfig(v.cc.color().Bold()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Bold() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Faint, decreased intensity, reset the Bold (2).
-func (v Value) Faint() Value {
-	v.cc = colorConfig(v.cc.color().Faint()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Faint() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // DoublyUnderline or Bold off, double-underline per ECMA-48 (21). It depends.
-func (v Value) DoublyUnderline() Value {
-	v.cc = colorConfig(v.cc.color().DoublyUnderline()) | v.cc.resetColor()
-	return v
-}
+func (v Value) DoublyUnderline() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Fraktur, rarely supported (20).
-func (v Value) Fraktur() Value {
-	v.cc = colorConfig(v.cc.color().Fraktur()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Fraktur() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Italic, not widely supported, sometimes treated as inverse (3).
-func (v Value) Italic() Value {
-	v.cc = colorConfig(v.cc.color().Italic()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Italic() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Underline (4).
-func (v Value) Underline() Value {
-	v.cc = colorConfig(v.cc.color().Underline()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Underline() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // SlowBlink, blinking less than 150 per minute (5).
-func (v Value) SlowBlink() Value {
-	v.cc = colorConfig(v.cc.color().SlowBlink()) | v.cc.resetColor()
-	return v
-}
+func (v Value) SlowBlink() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // RapidBlink, blinking 150+ per minute, not widely supported (6).
-func (v Value) RapidBlink() Value {
-	v.cc = colorConfig(v.cc.color().RapidBlink()) | v.cc.resetColor()
-	return v
-}
+func (v Value) RapidBlink() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Blink is alias for the SlowBlink.
 func (v Value) Blink() Value {
-	return v.SlowBlink()
+	_ = "STUB: not implemented"
+	return *
+
+	// Reverse video, swap foreground and background colors (7).
+	new(Value)
 }
 
-// Reverse video, swap foreground and background colors (7).
-func (v Value) Reverse() Value {
-	v.cc = colorConfig(v.cc.color().Reverse()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Reverse() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Inverse is alias for the Reverse.
 func (v Value) Inverse() Value {
-	return v.Reverse()
+	_ = "STUB: not implemented"
+
+	// Conceal, hidden, not widely supported (8).
+	return *new(Value)
 }
 
-// Conceal, hidden, not widely supported (8).
-func (v Value) Conceal() Value {
-	v.cc = colorConfig(v.cc.color().Conceal()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Conceal() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Hidden is alias for the Conceal.
 func (v Value) Hidden() Value {
-	return v.Conceal()
+	_ = "STUB: not implemented"
+
+	// CrossedOut, characters legible, but marked for deletion (9).
+	return *new(Value)
 }
 
-// CrossedOut, characters legible, but marked for deletion (9).
-func (v Value) CrossedOut() Value {
-	v.cc = colorConfig(v.cc.color().CrossedOut()) | v.cc.resetColor()
-	return v
-}
+func (v Value) CrossedOut() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // StrikeThrough is alias for the CrossedOut.
 func (v Value) StrikeThrough() Value {
-	return v.CrossedOut()
+	_ = "STUB: not implemented"
+	return *
+
+	// Framed (51).
+	new(Value)
 }
 
-// Framed (51).
-func (v Value) Framed() Value {
-	v.cc = colorConfig(v.cc.color().Framed()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Framed() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Encircled (52).
-func (v Value) Encircled() Value {
-	v.cc = colorConfig(v.cc.color().Encircled()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Encircled() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Overlined (53).
-func (v Value) Overlined() Value {
-	v.cc = colorConfig(v.cc.color().Overlined()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Overlined() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Foreground colors.
 //
 // Black foreground color (30).
-func (v Value) Black() Value {
-	v.cc = colorConfig(v.cc.color().Black()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Black() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Red foreground color (31).
-func (v Value) Red() Value {
-	v.cc = colorConfig(v.cc.color().Red()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Red() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Green foreground color (32).
-func (v Value) Green() Value {
-	v.cc = colorConfig(v.cc.color().Green()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Green() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Yellow foreground color (33).
-func (v Value) Yellow() Value {
-	v.cc = colorConfig(v.cc.color().Yellow()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Yellow() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Blue foreground color (34).
-func (v Value) Blue() Value {
-	v.cc = colorConfig(v.cc.color().Blue()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Blue() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Magenta foreground color (35).
-func (v Value) Magenta() Value {
-	v.cc = colorConfig(v.cc.color().Magenta()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Magenta() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Cyan foreground color (36).
-func (v Value) Cyan() Value {
-	v.cc = colorConfig(v.cc.color().Cyan()) | v.cc.resetColor()
-	return v
-}
+func (v Value) Cyan() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // White foreground color (37).
-func (v Value) White() Value {
-	v.cc = colorConfig(v.cc.color().White()) | v.cc.resetColor()
-	return v
-}
+func (v Value) White() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Bright foreground colors.
 //
 // BrightBlack foreground color (90).
-func (v Value) BrightBlack() Value {
-	v.cc = colorConfig(v.cc.color().BrightBlack()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BrightBlack() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightRed foreground color (91).
-func (v Value) BrightRed() Value {
-	v.cc = colorConfig(v.cc.color().BrightRed()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BrightRed() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightGreen foreground color (92).
-func (v Value) BrightGreen() Value {
-	v.cc = colorConfig(v.cc.color().BrightGreen()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BrightGreen() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightYellow foreground color (93).
-func (v Value) BrightYellow() Value {
-	v.cc = colorConfig(v.cc.color().BrightYellow()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BrightYellow() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightBlue foreground color (94).
-func (v Value) BrightBlue() Value {
-	v.cc = colorConfig(v.cc.color().BrightBlue()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BrightBlue() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightMagenta foreground color (95).
-func (v Value) BrightMagenta() Value {
-	v.cc = colorConfig(v.cc.color().BrightMagenta()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BrightMagenta() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightCyan foreground color (96).
-func (v Value) BrightCyan() Value {
-	v.cc = colorConfig(v.cc.color().BrightCyan()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BrightCyan() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BrightWhite foreground color (97).
-func (v Value) BrightWhite() Value {
-	v.cc = colorConfig(v.cc.color().BrightWhite()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BrightWhite() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Other colors.
 //
@@ -442,116 +270,62 @@ func (v Value) BrightWhite() Value {
 //	  8- 15:  high intensity colors (as in ESC [ 90–97 m)
 //	 16-231:  6 × 6 × 6 cube (216 colors): 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
 //	232-255:  grayscale from black to white in 24 steps
-func (v Value) Index(n ColorIndex) Value {
-	v.cc = colorConfig(v.cc.color().Index(n)) | v.cc.resetColor()
-	return v
-}
+func (v Value) Index(n ColorIndex) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Gray from 0 to 24.
-func (v Value) Gray(n GrayIndex) Value {
-	v.cc = colorConfig(v.cc.color().Gray(n)) | v.cc.resetColor()
-	return v
-}
+func (v Value) Gray(n GrayIndex) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Background colors
 //
 // BgBlack background color (40).
-func (v Value) BgBlack() Value {
-	v.cc = colorConfig(v.cc.color().BgBlack()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBlack() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgRed background color (41).
-func (v Value) BgRed() Value {
-	v.cc = colorConfig(v.cc.color().BgRed()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgRed() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgGreen background color (42).
-func (v Value) BgGreen() Value {
-	v.cc = colorConfig(v.cc.color().BgGreen()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgGreen() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgYellow background color (43).
-func (v Value) BgYellow() Value {
-	v.cc = colorConfig(v.cc.color().BgYellow()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgYellow() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBlue background color (44).
-func (v Value) BgBlue() Value {
-	v.cc = colorConfig(v.cc.color().BgBlue()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBlue() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgMagenta background color (45).
-func (v Value) BgMagenta() Value {
-	v.cc = colorConfig(v.cc.color().BgMagenta()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgMagenta() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgCyan background color (46).
-func (v Value) BgCyan() Value {
-	v.cc = colorConfig(v.cc.color().BgCyan()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgCyan() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgWhite background color (47).
-func (v Value) BgWhite() Value {
-	v.cc = colorConfig(v.cc.color().BgWhite()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgWhite() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Bright background colors.
 //
 // BgBrightBlack background color (100).
-func (v Value) BgBrightBlack() Value {
-	v.cc = colorConfig(v.cc.color().BgBrightBlack()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBrightBlack() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightRed background color (101).
-func (v Value) BgBrightRed() Value {
-	v.cc = colorConfig(v.cc.color().BgBrightRed()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBrightRed() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightGreen background color (102).
-func (v Value) BgBrightGreen() Value {
-	v.cc = colorConfig(v.cc.color().BgBrightGreen()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBrightGreen() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightYellow background color (103).
-func (v Value) BgBrightYellow() Value {
-	v.cc = colorConfig(v.cc.color().BgBrightYellow()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBrightYellow() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightBlue background color (104).
-func (v Value) BgBrightBlue() Value {
-	v.cc = colorConfig(v.cc.color().BgBrightBlue()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBrightBlue() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightMagenta background color (105).
-func (v Value) BgBrightMagenta() Value {
-	v.cc = colorConfig(v.cc.color().BgBrightMagenta()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBrightMagenta() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightCyan background color (106).
-func (v Value) BgBrightCyan() Value {
-	v.cc = colorConfig(v.cc.color().BgBrightCyan()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBrightCyan() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgBrightWhite background color (107).
-func (v Value) BgBrightWhite() Value {
-	v.cc = colorConfig(v.cc.color().BgBrightWhite()) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgBrightWhite() Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Other background colors.
 //
@@ -561,25 +335,16 @@ func (v Value) BgBrightWhite() Value {
 //	  8- 15:  high intensity colors (as in ESC [100–107 m)
 //	 16-231:  6 × 6 × 6 cube (216 colors): 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
 //	232-255:  grayscale from black to white in 24 steps
-func (v Value) BgIndex(n ColorIndex) Value {
-	v.cc = colorConfig(v.cc.color().BgIndex(n)) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgIndex(n ColorIndex) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // BgGray from 0 to 24.
-func (v Value) BgGray(n GrayIndex) Value {
-	v.cc = colorConfig(v.cc.color().BgGray(n)) | v.cc.resetColor()
-	return v
-}
+func (v Value) BgGray(n GrayIndex) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Special colorization method.
 //
 // Colorize removes existing colors and formats of the argument and applies
 // given.
-func (v Value) Colorize(color Color) Value {
-	v.cc = colorConfig(color) | v.cc.resetColor()
-	return v
-}
+func (v Value) Colorize(color Color) Value { _ = "STUB: not implemented"; return *new(Value) }
 
 // Hyperlinks feature
 //
@@ -605,33 +370,20 @@ func (v Value) Colorize(color Color) Value {
 //
 // Successive calls replace previously set target and parameters.
 func (v Value) Hyperlink(target string, params ...HyperlinkParam) Value {
-	if !v.cc.hyperlinksEnbaled() {
-		v.value = target // drop value, use the target
-		v.hyperlink = &hyperlink{
-			target: target, // keep for the HyperlinkTarget method
-		}
-		return v
-	}
-	if v.hyperlink == nil {
-		v.hyperlink = new(hyperlink)
-	}
-	v.hyperlink.target = target
-	v.hyperlink.params = params
-	return v
+	_ = "STUB: not implemented"
+	return *new(Value)
 }
+
+// drop value, use the target
+
+// keep for the HyperlinkTarget method
 
 // HyperlinkTarget if any.
-func (v Value) HyperlinkTarget() (target string) {
-	if v.hyperlink != nil {
-		return v.hyperlink.target
-	}
-	return // nothing
-}
+func (v Value) HyperlinkTarget() (target string) { _ = "STUB: not implemented"; return "" }
+
+// nothing
 
 // HyperlinkParams if any.
-func (v Value) HyperlinkParams() (params []HyperlinkParam) {
-	if v.hyperlink != nil {
-		return v.hyperlink.params
-	}
-	return // nil
-}
+func (v Value) HyperlinkParams() (params []HyperlinkParam) { _ = "STUB: not implemented"; return nil }
+
+// nil

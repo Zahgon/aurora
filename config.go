@@ -46,11 +46,7 @@ type Config struct {
 }
 
 // NewConfig returns new default Config.
-func NewConfig() (conf Config) {
-	conf.Colors = true
-	conf.Hyperlinks = true
-	return
-}
+func NewConfig() (conf Config) { _ = "STUB: not implemented"; return *new(Config) }
 
 // AddFlags to given *flag.FlagSet. The prefix used as prefix for flags.
 // It may be used to parse commandline flags. For example
@@ -66,55 +62,24 @@ func NewConfig() (conf Config) {
 // to enable or disable features. A colorizer can be created, for example,
 //
 //	var colorizer = New(conf.Options()...)
-func (c *Config) AddFlags(fset *flag.FlagSet, prefix string) {
-	fset.BoolVar(&c.Colors,
-		prefix+"colors",
-		c.Colors,
-		"enable colors")
-	fset.BoolVar(&c.Hyperlinks,
-		prefix+"hyperlinks",
-		c.Hyperlinks,
-		"enable hyperlinks")
-}
+func (c *Config) AddFlags(fset *flag.FlagSet, prefix string) { _ = "STUB: not implemented"; return }
 
 // Apply given options for the Config.
-func (c *Config) Apply(opts ...Option) {
-	for _, opt := range opts {
-		opt(c)
-	}
-}
+func (c *Config) Apply(opts ...Option) { _ = "STUB: not implemented"; return }
 
 // Options by the Config.
-func (c *Config) Options() (opts []Option) {
-	return []Option{
-		WithColors(c.Colors),
-		WithHyperlinks(c.Hyperlinks),
-	}
-}
+func (c *Config) Options() (opts []Option) { _ = "STUB: not implemented"; return nil }
 
 func (c *Config) colorConfig() (cc colorConfig) {
-	if c.Colors {
-		cc |= colorPin
-	}
-	if c.Hyperlinks {
-		cc |= hyperlinksPin
-	}
-	return
+	_ = "STUB: not implemented"
+	return *new(colorConfig)
 }
 
 // An Option function.
 type Option func(*Config)
 
 // WithColors is an Option that used to enable or disable colors.
-func WithColors(t bool) Option {
-	return func(c *Config) {
-		c.Colors = t
-	}
-}
+func WithColors(t bool) Option { _ = "STUB: not implemented"; return *new(Option) }
 
 // WithHyperlinks is an Option that used to enable or disable links.
-func WithHyperlinks(t bool) Option {
-	return func(c *Config) {
-		c.Hyperlinks = t
-	}
-}
+func WithHyperlinks(t bool) Option { _ = "STUB: not implemented"; return *new(Option) }

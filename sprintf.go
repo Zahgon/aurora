@@ -37,8 +37,6 @@ package aurora
 
 import (
 	"fmt"
-	"strconv"
-	"unicode/utf8"
 )
 
 type tailedValue struct {
@@ -47,6 +45,7 @@ type tailedValue struct {
 }
 
 func (v *tailedValue) Format(s fmt.State, verb rune) {
+	_ = "STUB: not implemented"
 
 	// it's enough for many cases (%-+020.10f)
 	// %          - 1
@@ -55,7 +54,9 @@ func (v *tailedValue) Format(s fmt.State, verb rune) {
 	// prec       - 3 (.23)
 	// verb       - 1
 	// --------------
-	//             10
+	//
+	//	10
+	//
 	// +
 	// \033[                            5
 	// 0;1;3;4;5;7;8;9;20;21;51;52;53  30
@@ -68,63 +69,13 @@ func (v *tailedValue) Format(s fmt.State, verb rune) {
 	// x2 (possible tail color)
 	//
 	// 10 + 59 * 2 = 128
-
-	var (
-		format = make([]byte, 0, 128)
-		color  = v.Color()
-	)
-	if color != 0 {
-		format = append(format, esc...)
-		format = color.appendNos(format, v.tail != 0)
-		format = append(format, 'm')
-	}
-	format = append(format, '%')
-	var f byte
-	for i := 0; i < len(availFlags); i++ {
-		if f = availFlags[i]; s.Flag(int(f)) {
-			format = append(format, f)
-		}
-	}
-	var width, prec int
-	var ok bool
-	if width, ok = s.Width(); ok {
-		format = strconv.AppendInt(format, int64(width), 10)
-	}
-	if prec, ok = s.Precision(); ok {
-		format = append(format, '.')
-		format = strconv.AppendInt(format, int64(prec), 10)
-	}
-	if verb > utf8.RuneSelf {
-		format = append(format, string(verb)...)
-	} else {
-		format = append(format, byte(verb))
-	}
-	if color != 0 {
-		if v.tail != 0 {
-			// set next (previous) format clearing current one
-			format = append(format, esc...)
-			format = v.tail.appendNos(format, true)
-			format = append(format, 'm')
-		} else {
-			format = append(format, clear...) // just clear
-		}
-	}
-	fmt.Fprintf(s, string(format), v.Value.Value())
+	return
 }
 
-func sprintf(format interface{}, args ...interface{}) string {
-	switch ft := format.(type) {
-	case string:
-		return fmt.Sprintf(ft, args...)
-	case Value:
-		for i, v := range args {
-			if val, ok := v.(Value); ok {
-				args[i] = &tailedValue{Value: val, tail: ft.Color()}
-				continue
-			}
-		}
-		return fmt.Sprintf(ft.String(), args...)
-	}
-	// unknown type of format (we hope it's a string)
-	return fmt.Sprintf(fmt.Sprint(format), args...)
-}
+// set next (previous) format clearing current one
+
+// just clear
+
+func sprintf(format interface{}, args ...interface{}) string { _ = "STUB: not implemented"; return "" }
+
+// unknown type of format (we hope it's a string)

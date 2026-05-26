@@ -176,209 +176,71 @@ const (
 // may be an empty string for empty color.
 // If the zero is true, then the string
 // is prepended with 0;
-func (c Color) Nos(zero bool) string {
-	return string(c.appendNos(make([]byte, 0, 59), zero))
-}
+func (c Color) Nos(zero bool) string { _ = "STUB: not implemented"; return "" }
 
 func appendCond(bs []byte, cond, semi bool, vals ...byte) []byte {
-	if !cond {
-		return bs
-	}
-	return appendSemi(bs, semi, vals...)
+	_ = "STUB: not implemented"
+	return nil
 }
 
 // if the semi is true, then prepend with semicolon
-func appendSemi(bs []byte, semi bool, vals ...byte) []byte {
-	if semi {
-		bs = append(bs, ';')
-	}
-	return append(bs, vals...)
-}
+func appendSemi(bs []byte, semi bool, vals ...byte) []byte { _ = "STUB: not implemented"; return nil }
 
-func itoa(t byte) string {
-	var (
-		a [3]byte
-		j = 2
-	)
-	for i := 0; i < 3; i, j = i+1, j-1 {
-		a[j] = '0' + t%10
-		if t = t / 10; t == 0 {
-			break
-		}
-	}
-	return string(a[j:])
-}
+func itoa(t byte) string { _ = "STUB: not implemented"; return "" }
 
-func (c Color) appendFg(bs []byte, zero bool) []byte {
+func (c Color) appendFg(bs []byte, zero bool) []byte { _ = "STUB: not implemented"; return nil }
 
-	if zero || c&maskFm != 0 {
-		bs = append(bs, ';')
-	}
+// 0- 7 :  30-37
+// 8-15 :  90-97
+// > 15 : 38;5;val
 
-	// 0- 7 :  30-37
-	// 8-15 :  90-97
-	// > 15 : 38;5;val
+// '3' and the value itself
 
-	switch fg := (c & maskFg) >> shiftFg; {
-	case fg <= 7:
-		// '3' and the value itself
-		bs = append(bs, '3', '0'+byte(fg))
-	case fg <= 15:
-		// '9' and the value itself
-		bs = append(bs, '9', '0'+byte(fg&^0x08)) // clear bright flag
-	default:
-		bs = append(bs, '3', '8', ';', '5', ';')
-		bs = append(bs, itoa(byte(fg))...)
-	}
-	return bs
-}
+// '9' and the value itself
+// clear bright flag
 
-func (c Color) appendBg(bs []byte, zero bool) []byte {
+func (c Color) appendBg(bs []byte, zero bool) []byte { _ = "STUB: not implemented"; return nil }
 
-	if zero || c&(maskFm|maskFg) != 0 {
-		bs = append(bs, ';')
-	}
+// 0- 7 :  40- 47
+// 8-15 : 100-107
+// > 15 : 48;5;val
 
-	// 0- 7 :  40- 47
-	// 8-15 : 100-107
-	// > 15 : 48;5;val
+// '3' and the value itself
 
-	switch fg := (c & maskBg) >> shiftBg; {
-	case fg <= 7:
-		// '3' and the value itself
-		bs = append(bs, '4', '0'+byte(fg))
-	case fg <= 15:
-		// '1', '0' and the value itself
-		bs = append(bs, '1', '0', '0'+byte(fg&^0x08)) // clear bright flag
-	default:
-		bs = append(bs, '4', '8', ';', '5', ';')
-		bs = append(bs, itoa(byte(fg))...)
-	}
-	return bs
-}
+// '1', '0' and the value itself
+// clear bright flag
 
-func (c Color) appendFm9(bs []byte, zero bool) []byte {
+func (c Color) appendFm9(bs []byte, zero bool) []byte { _ = "STUB: not implemented"; return nil }
 
-	bs = appendCond(bs, c&ItalicFm != 0,
-		zero || c&(BoldFm|FaintFm) != 0,
-		'3')
-	bs = appendCond(bs, c&UnderlineFm != 0,
-		zero || c&(BoldFm|FaintFm|ItalicFm) != 0,
-		'4')
-	// don't combine slow and rapid blink using only
-	// on of them, preferring slow blink
-	if c&SlowBlinkFm != 0 {
-		bs = appendSemi(bs,
-			zero || c&(BoldFm|FaintFm|ItalicFm|UnderlineFm) != 0,
-			'5')
-	} else if c&RapidBlinkFm != 0 {
-		bs = appendSemi(bs,
-			zero || c&(BoldFm|FaintFm|ItalicFm|UnderlineFm) != 0,
-			'6')
-	}
+// don't combine slow and rapid blink using only
+// on of them, preferring slow blink
 
-	// including 1-2
-	const mask6i = BoldFm | FaintFm |
-		ItalicFm | UnderlineFm |
-		SlowBlinkFm | RapidBlinkFm
-
-	bs = appendCond(bs, c&ReverseFm != 0,
-		zero || c&(mask6i) != 0,
-		'7')
-	bs = appendCond(bs, c&ConcealFm != 0,
-		zero || c&(mask6i|ReverseFm) != 0,
-		'8')
-	bs = appendCond(bs, c&CrossedOutFm != 0,
-		zero || c&(mask6i|ReverseFm|ConcealFm) != 0,
-		'9')
-
-	return bs
-}
+// including 1-2
 
 // append 1;3;38;5;216 like string that represents ANSI
 // color of the Color; the zero argument requires
 // appending of '0' before to reset previous format
 // and colors
-func (c Color) appendNos(bs []byte, zero bool) []byte {
+func (c Color) appendNos(bs []byte, zero bool) []byte { _ = "STUB: not implemented"; return nil }
 
-	if zero {
-		bs = append(bs, '0') // reset previous
-	}
+// reset previous
 
-	// formats
-	//
+// formats
+//
 
-	if c&maskFm != 0 {
+// 1-2
 
-		// 1-2
+// don't combine bold and faint using only on of them, preferring bold
 
-		// don't combine bold and faint using only on of them, preferring bold
+// 3-9
 
-		if c&BoldFm != 0 {
-			bs = appendSemi(bs, zero, '1')
-		} else if c&FaintFm != 0 {
-			bs = appendSemi(bs, zero, '2')
-		}
+// 20-21
 
-		// 3-9
+// 50-53
 
-		const mask9 = ItalicFm | UnderlineFm |
-			SlowBlinkFm | RapidBlinkFm |
-			ReverseFm | ConcealFm | CrossedOutFm
+// foreground
 
-		if c&mask9 != 0 {
-			bs = c.appendFm9(bs, zero)
-		}
-
-		// 20-21
-
-		const (
-			mask21 = FrakturFm | DoublyUnderlineFm
-			mask9i = BoldFm | FaintFm | mask9
-		)
-
-		if c&mask21 != 0 {
-			bs = appendCond(bs, c&FrakturFm != 0,
-				zero || c&mask9i != 0,
-				'2', '0')
-			bs = appendCond(bs, c&DoublyUnderlineFm != 0,
-				zero || c&(mask9i|FrakturFm) != 0,
-				'2', '1')
-		}
-
-		// 50-53
-
-		const (
-			mask53  = FramedFm | EncircledFm | OverlinedFm
-			mask21i = mask9i | mask21
-		)
-
-		if c&mask53 != 0 {
-			bs = appendCond(bs, c&FramedFm != 0,
-				zero || c&mask21i != 0,
-				'5', '1')
-			bs = appendCond(bs, c&EncircledFm != 0,
-				zero || c&(mask21i|FramedFm) != 0,
-				'5', '2')
-			bs = appendCond(bs, c&OverlinedFm != 0,
-				zero || c&(mask21i|FramedFm|EncircledFm) != 0,
-				'5', '3')
-		}
-
-	}
-
-	// foreground
-	if c&maskFg != 0 {
-		bs = c.appendFg(bs, zero)
-	}
-
-	// background
-	if c&maskBg != 0 {
-		bs = c.appendBg(bs, zero)
-	}
-
-	return bs
-}
+// background
 
 // ColorIndex is index of pre-defined 8-bit foreground or
 // background colors from 0 to 255 (38;5;n).
@@ -399,192 +261,181 @@ type Colored interface {
 
 // Reset returns Color without a color and formats.
 func (c Color) Reset() Color {
-	return Color(0)
-}
+	_ = "STUB: not implemented"
 
-//
-// Formats
-//
+	// Formats
+	return *new(Color)
+}
 
 // Bold or increased intensity (1).
-func (c Color) Bold() Color {
-	return (c &^ FaintFm) | BoldFm
-}
+func (c Color) Bold() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Faint, decreased intensity (2).
-func (c Color) Faint() Color {
-	return (c &^ BoldFm) | FaintFm
-}
+func (c Color) Faint() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // DoublyUnderline or Bold off, double-underline
 // per ECMA-48 (21).
-func (c Color) DoublyUnderline() Color {
-	return (c &^ UnderlineFm) | DoublyUnderlineFm
-}
+func (c Color) DoublyUnderline() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Fraktur, rarely supported (20).
 func (c Color) Fraktur() Color {
-	return c | FrakturFm
+	_ = "STUB: not implemented"
+	return *
+
+	// Italic, not widely supported, sometimes
+	// treated as inverse (3).
+	new(Color)
 }
 
-// Italic, not widely supported, sometimes
-// treated as inverse (3).
 func (c Color) Italic() Color {
-	return c | ItalicFm
+	_ = "STUB: not implemented"
+	return *
+
+	// Underline (4).
+	new(Color)
 }
 
-// Underline (4).
-func (c Color) Underline() Color {
-	return (c &^ DoublyUnderlineFm) | UnderlineFm
-}
+func (c Color) Underline() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // SlowBlink, blinking less than 150
 // per minute (5).
-func (c Color) SlowBlink() Color {
-	return (c &^ RapidBlinkFm) | SlowBlinkFm
-}
+func (c Color) SlowBlink() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // RapidBlink, blinking 150+ per minute,
 // not widely supported (6).
-func (c Color) RapidBlink() Color {
-	return (c &^ SlowBlinkFm) | RapidBlinkFm
-}
+func (c Color) RapidBlink() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Blink is alias for the SlowBlink.
 func (c Color) Blink() Color {
-	return c.SlowBlink()
+	_ = "STUB: not implemented"
+	return *
+
+	// Reverse video, swap foreground and
+	// background colors (7).
+	new(Color)
 }
 
-// Reverse video, swap foreground and
-// background colors (7).
 func (c Color) Reverse() Color {
-	return c | ReverseFm
+	_ = "STUB: not implemented"
+	return *
+
+	// Inverse is alias for the Reverse
+	new(Color)
 }
 
-// Inverse is alias for the Reverse
 func (c Color) Inverse() Color {
-	return c.Reverse()
+	_ = "STUB: not implemented"
+
+	// Conceal, hidden, not widely supported (8).
+	return *new(Color)
 }
 
-// Conceal, hidden, not widely supported (8).
 func (c Color) Conceal() Color {
-	return c | ConcealFm
+	_ = "STUB: not implemented"
+	return *
+
+	// Hidden is alias for the Conceal
+	new(Color)
 }
 
-// Hidden is alias for the Conceal
 func (c Color) Hidden() Color {
-	return c.Conceal()
+	_ = "STUB: not implemented"
+
+	// CrossedOut, characters legible, but
+	// marked for deletion (9).
+	return *new(Color)
 }
 
-// CrossedOut, characters legible, but
-// marked for deletion (9).
 func (c Color) CrossedOut() Color {
-	return c | CrossedOutFm
+	_ = "STUB: not implemented"
+	return *
+
+	// StrikeThrough is alias for the CrossedOut.
+	new(Color)
 }
 
-// StrikeThrough is alias for the CrossedOut.
 func (c Color) StrikeThrough() Color {
-	return c.CrossedOut()
+	_ = "STUB: not implemented"
+	return *
+
+	// Framed (51).
+	new(Color)
 }
 
-// Framed (51).
 func (c Color) Framed() Color {
-	return c | FramedFm
+	_ = "STUB: not implemented"
+	return *
+
+	// Encircled (52).
+	new(Color)
 }
 
-// Encircled (52).
 func (c Color) Encircled() Color {
-	return c | EncircledFm
+	_ = "STUB: not implemented"
+	return *
+
+	// Overlined (53).
+	new(Color)
 }
 
-// Overlined (53).
 func (c Color) Overlined() Color {
-	return c | OverlinedFm
+	_ = "STUB: not implemented"
+	return *
+
+	// Foreground colors
+	//
+	// Black foreground color (30)
+	new(Color)
 }
 
-// Foreground colors
-//
-// Black foreground color (30)
-func (c Color) Black() Color {
-	return (c &^ maskFg) | BlackFg
-}
+func (c Color) Black() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Red foreground color (31)
-func (c Color) Red() Color {
-	return (c &^ maskFg) | RedFg
-}
+func (c Color) Red() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Green foreground color (32)
-func (c Color) Green() Color {
-	return (c &^ maskFg) | GreenFg
-}
+func (c Color) Green() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Yellow foreground color (33)
-func (c Color) Yellow() Color {
-	return (c &^ maskFg) | YellowFg
-}
+func (c Color) Yellow() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Blue foreground color (34)
-func (c Color) Blue() Color {
-	return (c &^ maskFg) | BlueFg
-}
+func (c Color) Blue() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Magenta foreground color (35)
-func (c Color) Magenta() Color {
-	return (c &^ maskFg) | MagentaFg
-}
+func (c Color) Magenta() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Cyan foreground color (36)
-func (c Color) Cyan() Color {
-	return (c &^ maskFg) | CyanFg
-}
+func (c Color) Cyan() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // White foreground color (37)
-func (c Color) White() Color {
-	return (c &^ maskFg) | WhiteFg
-}
+func (c Color) White() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Bright foreground colors
 //
 // BrightBlack foreground color (90)
-func (c Color) BrightBlack() Color {
-	return (c &^ maskFg) | BrightFg | BlackFg
-}
+func (c Color) BrightBlack() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BrightRed foreground color (91)
-func (c Color) BrightRed() Color {
-	return (c &^ maskFg) | BrightFg | RedFg
-}
+func (c Color) BrightRed() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BrightGreen foreground color (92)
-func (c Color) BrightGreen() Color {
-	return (c &^ maskFg) | BrightFg | GreenFg
-}
+func (c Color) BrightGreen() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BrightYellow foreground color (93)
-func (c Color) BrightYellow() Color {
-	return (c &^ maskFg) | BrightFg | YellowFg
-}
+func (c Color) BrightYellow() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BrightBlue foreground color (94)
-func (c Color) BrightBlue() Color {
-	return (c &^ maskFg) | BrightFg | BlueFg
-}
+func (c Color) BrightBlue() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BrightMagenta foreground color (95)
-func (c Color) BrightMagenta() Color {
-	return (c &^ maskFg) | BrightFg | MagentaFg
-}
+func (c Color) BrightMagenta() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BrightCyan foreground color (96)
-func (c Color) BrightCyan() Color {
-	return (c &^ maskFg) | BrightFg | CyanFg
-}
+func (c Color) BrightCyan() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BrightWhite foreground color (97)
-func (c Color) BrightWhite() Color {
-	return (c &^ maskFg) | BrightFg | WhiteFg
-}
+func (c Color) BrightWhite() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Other
 //
@@ -595,101 +446,62 @@ func (c Color) BrightWhite() Color {
 //	  8- 15:  high intensity colors (as in ESC [ 90–97 m)
 //	 16-231:  6 × 6 × 6 cube (216 colors): 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
 //	232-255:  grayscale from black to white in 24 steps
-func (c Color) Index(ci ColorIndex) Color {
-	return (c &^ maskFg) | (Color(ci) << shiftFg) | flagFg
-}
+func (c Color) Index(ci ColorIndex) Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Gray from 0 to 23.
-func (c Color) Gray(n GrayIndex) Color {
-	if n > 23 {
-		n = 23
-	}
-	return (c &^ maskFg) | (Color(232+n) << shiftFg) | flagFg
-}
+func (c Color) Gray(n GrayIndex) Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Background colors
 //
 // BgBlack background color (40)
-func (c Color) BgBlack() Color {
-	return (c &^ maskBg) | BlackBg
-}
+func (c Color) BgBlack() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgRed background color (41)
-func (c Color) BgRed() Color {
-	return (c &^ maskBg) | RedBg
-}
+func (c Color) BgRed() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgGreen background color (42)
-func (c Color) BgGreen() Color {
-	return (c &^ maskBg) | GreenBg
-}
+func (c Color) BgGreen() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgYellow background color (43)
-func (c Color) BgYellow() Color {
-	return (c &^ maskBg) | YellowBg
-}
+func (c Color) BgYellow() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgBlue background color (44)
-func (c Color) BgBlue() Color {
-	return (c &^ maskBg) | BlueBg
-}
+func (c Color) BgBlue() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgMagenta background color (45)
-func (c Color) BgMagenta() Color {
-	return (c &^ maskBg) | MagentaBg
-}
+func (c Color) BgMagenta() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgCyan background color (46)
-func (c Color) BgCyan() Color {
-	return (c &^ maskBg) | CyanBg
-}
+func (c Color) BgCyan() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgWhite background color (47)
-func (c Color) BgWhite() Color {
-	return (c &^ maskBg) | WhiteBg
-}
+func (c Color) BgWhite() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Bright background colors
 //
 // BgBrightBlack background color (100)
-func (c Color) BgBrightBlack() Color {
-	return (c &^ maskBg) | BrightBg | BlackBg
-}
+func (c Color) BgBrightBlack() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgBrightRed background color (101)
-func (c Color) BgBrightRed() Color {
-	return (c &^ maskBg) | BrightBg | RedBg
-}
+func (c Color) BgBrightRed() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgBrightGreen background color (102)
-func (c Color) BgBrightGreen() Color {
-	return (c &^ maskBg) | BrightBg | GreenBg
-}
+func (c Color) BgBrightGreen() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgBrightYellow background color (103)
-func (c Color) BgBrightYellow() Color {
-	return (c &^ maskBg) | BrightBg | YellowBg
-}
+func (c Color) BgBrightYellow() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgBrightBlue background color (104)
-func (c Color) BgBrightBlue() Color {
-	return (c &^ maskBg) | BrightBg | BlueBg
-}
+func (c Color) BgBrightBlue() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgBrightMagenta background color (105)
-func (c Color) BgBrightMagenta() Color {
-	return (c &^ maskBg) | BrightBg | MagentaBg
-}
+func (c Color) BgBrightMagenta() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgBrightCyan background color (106)
-func (c Color) BgBrightCyan() Color {
-	return (c &^ maskBg) | BrightBg | CyanBg
-}
+func (c Color) BgBrightCyan() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgBrightWhite background color (107)
-func (c Color) BgBrightWhite() Color {
-	return (c &^ maskBg) | BrightBg | WhiteBg
-}
+func (c Color) BgBrightWhite() Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // Other
 //
@@ -700,14 +512,7 @@ func (c Color) BgBrightWhite() Color {
 //	  8- 15:  high intensity colors (as in ESC [100–107 m)
 //	 16-231:  6 × 6 × 6 cube (216 colors): 16 + 36 × r + 6 × g + b (0 ≤ r, g, b ≤ 5)
 //	232-255:  grayscale from black to white in 24 steps
-func (c Color) BgIndex(n ColorIndex) Color {
-	return (c &^ maskBg) | (Color(n) << shiftBg) | flagBg
-}
+func (c Color) BgIndex(n ColorIndex) Color { _ = "STUB: not implemented"; return *new(Color) }
 
 // BgGray from 0 to 23.
-func (c Color) BgGray(n GrayIndex) Color {
-	if n > 23 {
-		n = 23
-	}
-	return (c &^ maskBg) | (Color(232+n) << shiftBg) | flagBg
-}
+func (c Color) BgGray(n GrayIndex) Color { _ = "STUB: not implemented"; return *new(Color) }
